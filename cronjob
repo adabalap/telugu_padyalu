@@ -6,6 +6,6 @@ cd ${BASE_DIR}
 . ${BASE_DIR}/venv/bin/activate
 
 python3 padyalu.py -m twitter -d ./telugu_padyalu.DB -t ./twitter_tokens.json -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన" -T test
-#python3 padyalu.py -m twitter -d ./telugu_padyalu.DB -t ./twitter_tokens.json -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన" -T tes
+#python3 padyalu.py -m twitter -d ./telugu_padyalu.DB -t ./twitter_tokens.json -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన" -T te
 
 deactivate
