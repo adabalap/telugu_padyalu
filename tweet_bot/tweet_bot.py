@@ -3,18 +3,18 @@ from db import db
 
 
 def tweet_bot(args):
-    # Get the message
+    # Get the message from DB
     (db_conn, message, record_id) = db.get_message(args)
 
     if args['hash_tag']:
-        # create a thread tweet, both should have hash-tag
-        message["padyam"] = f'{message["padyam"]}\n' \
+        # Append hash-tag to padyam
+        message["padyam"] = f'{message["padyam"]}\n\n' \
                             f'{args["hash_tag"]}'
-        message["meaning"] = f'{message["meaning"]}\n' \
-                             f'{args["hash_tag"]}'
 
         # convert dict values as list type to tweet
-        message = list(message.values())
+        # message = list(message.values())
+        message = message["padyam"]
+
     try:
         tokens = twitter.tokens(args['twitter_tokens_file'])
         api = twitter.auth(tokens)

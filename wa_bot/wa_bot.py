@@ -21,9 +21,14 @@ def wa_bot(args):
         print(f'{ctime(t)} - NO MESSAGES TO BE SENT')
         return 1
 
-    message = f'*వేమన్న పద్యం* :\n{message}'
-    print(f'{ctime(t)} - Sending message to: {args["wa_contact"]}\n')
-    print(f'{ctime(t)} - {message}')
+    wa_contact = f'{args["wa_contact"]}'
+
+    wa_message = f'{message["padyam"]}' \
+                 f'\n' \
+                 f'{message["meaning"]}'
+
+    print(f'{ctime(t)} - Sending message to: {wa_contact}\n')
+    print(f'{ctime(t)} - \n{wa_message}')
 
     options = Options()
 
@@ -37,14 +42,14 @@ def wa_bot(args):
         driver = webdriver.Chrome(options=options)
         driver.maximize_window()
         driver.get('https://web.whatsapp.com')
-        sleep(25)
+        sleep(10)
 
-        driver.find_element_by_xpath('//*[@title = "{}"]'.format(args['wa_contact'])).click()
-        sleep(30)
+        driver.find_element_by_xpath('//*[@title = "{}"]'.format(wa_contact)).click()
+        sleep(5)
 
         wa_msg = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
-        wa_msg.send_keys(message)
-        sleep(15)
+        wa_msg.send_keys(wa_message)
+        sleep(5)
 
         driver.quit()
         display.stop()
@@ -68,6 +73,5 @@ def wa_bot(args):
 
     except Exception as err:
         print(f'{ctime(t)} - Un-know Exception:\n\n{err}')
-        pass
 
     return 0
