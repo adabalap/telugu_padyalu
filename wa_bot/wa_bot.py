@@ -24,7 +24,7 @@ def wa_bot(args):
         return 1
 
     wa_contact = f'{args["wa_contact"]}'
-    
+
     # Build the message
     if args['caption']:
         wa_message = f'{args["caption"]}'
@@ -33,16 +33,16 @@ def wa_bot(args):
         wa_message = f'{wa_message}' \
                      f'\n' \
                      f'{message["padyam"]}' \
-                     f'\n' 
+                     f'\n'
 
     if message['meaning']:
         message['meaning'] = message["meaning"].replace("తాత్పర్యం:", "*తాత్పర్యం:*")
         wa_message = f'{wa_message}' \
                      f'\n' \
                      f'{message["meaning"]}' \
-                     f'\n' 
+                     f'\n'
 
-    # Convert string message into list
+        # Convert string message into list
     wa_message_li = wa_message.split('\n')
 
     print(f'{ctime(t)} - Sending message to: {wa_contact}\n')
