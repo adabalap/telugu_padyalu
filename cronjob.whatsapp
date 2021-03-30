@@ -2,12 +2,32 @@
 export LC_ALL="C.UTF-8"
 BASE_DIR="/home/adabalap/Source/telugu_padyalu"
 
+
+#
+# Clean up and stale process from previous run
+#
+echo "`date`: Checking for Xvfb stale process"
+ps -ef | grep Xvfb | grep -v grep 
+
+if [[ $? == 1 ]]
+then
+	echo "`date` No Xvfb stale process found"
+else
+	echo "`date` Cleaning up Xvfb stale process"
+	/usr/bin/pkill Xvfb
+	sleep 5
+fi
+
+#
+# Setup the environmet and run the program
+#
 cd ${BASE_DIR}
 . ${BASE_DIR}/venv/bin/activate
 
 python3 telugu_padyalu.py  -m whatsapp \
 		    -u "😎SputnikBot😎" \
                     -d ./telugu_padyalu.DB \
+		    -c "*శుభోదయం* ఈరోజు *పద్యం*:" \
                     -T test
 
 

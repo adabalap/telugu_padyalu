@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
 from db import db
 
@@ -12,6 +13,7 @@ from db import db
 def wa_bot(args):
     # Main WhatsApp Bot Logic
     t = time()
+    wa_message = ''
 
     # Get the message
     (db_conn, message, record_id) = db.get_message(args)
@@ -22,13 +24,29 @@ def wa_bot(args):
         return 1
 
     wa_contact = f'{args["wa_contact"]}'
+    
+    # Build the message
+    if args['caption']:
+        wa_message = f'{args["caption"]}'
 
-    wa_message = f'{message["padyam"]}' \
-                 f'\n' \
-                 f'{message["meaning"]}'
+    if message['padyam']:
+        wa_message = f'{wa_message}' \
+                     f'\n' \
+                     f'{message["padyam"]}' \
+                     f'\n' 
+
+    if message['meaning']:
+        message['meaning'] = message["meaning"].replace("తాత్పర్యం:", "*తాత్పర్యం:*")
+        wa_message = f'{wa_message}' \
+                     f'\n' \
+                     f'{message["meaning"]}' \
+                     f'\n' 
+
+    # Convert string message into list
+    wa_message_li = wa_message.split('\n')
 
     print(f'{ctime(t)} - Sending message to: {wa_contact}\n')
-    print(f'{ctime(t)} - \n{wa_message}')
+    print(f'{ctime(t)} - \n{wa_message_li}')
 
     options = Options()
 
@@ -48,7 +66,13 @@ def wa_bot(args):
         sleep(5)
 
         wa_msg = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
-        wa_msg.send_keys(wa_message)
+
+        # Put the message in one-block
+        for i in wa_message_li:
+            wa_msg.send_keys(i + Keys.SHIFT + Keys.RETURN)
+
+        wa_msg.send_keys(Keys.ENTER)
+
         sleep(5)
 
         driver.quit()

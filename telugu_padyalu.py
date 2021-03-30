@@ -14,6 +14,7 @@ def get_cmd_line_args():
     ap.add_argument("-m", "--mode", required=True)  # mode: whatsapp, twitter
     ap.add_argument("-u", "--wa_contact", required=False)
     ap.add_argument("-d", "--db_file", required=True)
+    ap.add_argument("-c", "--caption", required=False)
     ap.add_argument("-t", "--twitter_tokens_file", required=False)
     ap.add_argument("-ht", "--hash_tag", required=False)
     ap.add_argument("-T", "--testing", required=False)
