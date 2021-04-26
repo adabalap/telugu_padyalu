@@ -10,10 +10,18 @@ cd ${BASE_DIR}
 #                    -t ./cfg/twitter_tokens.json \
 #                    -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన" \
 #                    -T test
-
+echo "`date`: ${0} : Posting tweet"
 python3 telugu_padyalu.py -m twitter \
                    -d ./telugu_padyalu.DB \
                    -t ./cfg/twitter_tokens.json \
                    -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన"
 
+if [[ $? == 0 ]]
+then
+	echo "`date`: ${0} : Posted tweet"
+else
+	echo "`date`: ${0} : rc = ${?}, Check something went wrong"
+fi
+	
 deactivate
+

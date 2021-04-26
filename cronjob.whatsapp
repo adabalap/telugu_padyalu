@@ -17,9 +17,9 @@ do
 
   if [[ $? == 1 ]]
   then
-    echo "`date` No ${i} stale process found"
+    echo "`date`: No ${i} stale process found"
   else
-    echo "`date` Cleaning up ${i} stale process"
+    echo "`date`: Cleaning up ${i} stale process"
     /usr/bin/pkill ${i}
     sleep 5
   fi
