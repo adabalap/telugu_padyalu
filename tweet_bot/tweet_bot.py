@@ -20,14 +20,15 @@ def tweet_bot(args):
         tokens = twitter.tokens(args['twitter_tokens_file'])
         api = twitter.auth(tokens)
 
-        if twitter.tweet(api, message) == 0:
-            print(f'Tweet posted ... Hurray!')
+        twitter.tweet(api, message)
 
         if args['testing'] is False:
             db.update_db_record(db_conn, record_id, args['mode'])
+
     except Exception as err:
         print(f'Exception occurred: {err}')
         rc = 1
+
     finally:
         db.close_db_connection(db_conn)
 
