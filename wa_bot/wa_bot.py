@@ -14,6 +14,7 @@ def wa_bot(args):
     # Main WhatsApp Bot Logic
     t = time()
     wa_message = ''
+    rc = 0
 
     # Get the message
     (db_conn, message, record_id) = db.get_message(args)
@@ -24,6 +25,7 @@ def wa_bot(args):
         return 1
 
     wa_contact = f'{args["wa_contact"]}'
+    print(f'Sending message to contact: {wa_contact}')
 
     # Build the message
     if args['caption']:
@@ -42,10 +44,9 @@ def wa_bot(args):
                      f'{message["meaning"]}' \
                      f'\n'
 
-        # Convert string message into list
+    # Convert string message into list
     wa_message_li = wa_message.split('\n')
 
-    print(f'{ctime(t)} - Sending message to: {wa_contact}\n')
     print(f'{ctime(t)} - \n{wa_message_li}')
 
     options = Options()
@@ -63,7 +64,7 @@ def wa_bot(args):
         sleep(10)
 
         driver.find_element_by_xpath('//*[@title = "{}"]'.format(wa_contact)).click()
-        sleep(5)
+        sleep(10)
 
         wa_msg = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
 
@@ -90,12 +91,15 @@ def wa_bot(args):
     except NoSuchElementException as err:
         print(f'{ctime(t)} - Exception: NoSuchElementException')
         print(err)
+        rc = 1
 
     except TimeoutException as err:
         print(f'{ctime(t)} - Exception: Timeout')
         print(err)
+        rc = 1
 
     except Exception as err:
         print(f'{ctime(t)} - Un-know Exception:\n\n{err}')
+        rc = 1
 
-    return 0
+    return rc

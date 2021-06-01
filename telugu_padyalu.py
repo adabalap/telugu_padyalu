@@ -43,10 +43,10 @@ if __name__ == "__main__":
     if rc == 0:
         if args['mode'] == 'whatsapp':
             # put WhatsApp BOT to work
-            wa_bot.wa_bot(args)
+            rc = wa_bot.wa_bot(args)
         elif args['mode'] == 'twitter':
             # put Twitter BOT to work
-            tweet_bot.tweet_bot(args)
+            rc = tweet_bot.tweet_bot(args)
         else:
             # un-know mode
             print('error: Current Valid Modes Allowed: [whatsapp, twitter]')

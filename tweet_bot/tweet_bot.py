@@ -5,6 +5,7 @@ from db import db
 def tweet_bot(args):
     # Get the message from DB
     (db_conn, message, record_id) = db.get_message(args)
+    rc = 0
 
     if args['hash_tag']:
         # Append hash-tag to padyam
@@ -26,5 +27,8 @@ def tweet_bot(args):
             db.update_db_record(db_conn, record_id, args['mode'])
     except Exception as err:
         print(f'Exception occurred: {err}')
+        rc = 1
     finally:
         db.close_db_connection(db_conn)
+
+    return rc
