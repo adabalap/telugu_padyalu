@@ -63,7 +63,7 @@ do
 	main
 	rc=$?	
 
-	if [[ $rc -eq 0 && $RETRY_COUNT -eq 0]]; then
+	if [[ $rc -eq 0 && $RETRY_COUNT -eq 0 ]]; then
 		echo "`date`: Delivered message in first attempt"
 		RETRY="False"
 		break
