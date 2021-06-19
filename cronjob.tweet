@@ -14,7 +14,7 @@ echo "`date`: ${0} : Posting tweet"
 python3 telugu_padyalu.py -m twitter \
                    -d ./telugu_padyalu.DB \
                    -t ./cfg/twitter_tokens.json \
-                   -ht "#తెలుగుపద్యాలు #పద్యాలు #వేమనపద్యాలు #వేమనశతకం #వేమన"
+                   -ht "#తెలుగుపద్యాలు #పద్యాలు #సుమతీశతకము #సుమతీపద్యాలు #సుమతీ"
 
 if [[ $? == 0 ]]
 then

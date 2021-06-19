@@ -33,15 +33,10 @@ main() {
 	clean_up_stale_process
 
 	python3 telugu_padyalu.py	-m whatsapp \
-			          	-u "😎Family😎" \
+        		          	-u "😎Family😎" \
 	                            	-d ./telugu_padyalu.DB \
-			            	-c "*శుభోదయం* ఈరోజు *పద్యం*:" 
+			            	-c "☀️ శుభోదయం ☀️"
 
-	#python3 telugu_padyalu.py	-m whatsapp \
-	#		          	-u "SputnikBot-1" \
-        #        	            	-d ./telugu_padyalu.DB \
-	#	        	    	-c "*శుభోదయం* ఈరోజు *పద్యం*:"  \
-	#				-T test
 
 	return $?
 }
@@ -64,7 +59,7 @@ do
 	rc=$?	
 
 	if [[ $rc -eq 0 && $RETRY_COUNT -eq 0 ]]; then
-		echo "`date`: Delivered message in first attempt"
+		echo "`date`: Delivered message on first attempt"
 		RETRY="False"
 		break
  	elif [[ $rc -ne 0 && $RETRY_COUNT -eq 0 ]]; then	
@@ -72,6 +67,7 @@ do
 		RETRY_START_TIME=`date`	
 	fi
 	
+	#
 	# adding rate limit logic for retry
 	#
 	# Sleep for 5 minutes before retry

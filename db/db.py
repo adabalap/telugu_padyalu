@@ -41,6 +41,9 @@ def get_telugu_padyalu(db_conn, args):
             record_id = row[0]
             message['padyam'] = row[2]
             message['meaning'] = row[3]
+        else:
+            (message, record_id) = None, None
+
 
     except Error as err:
         print(err)

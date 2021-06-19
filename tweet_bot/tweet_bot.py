@@ -1,3 +1,4 @@
+from time import time, ctime
 from ShiningArmor import twitter
 from db import db
 
@@ -5,7 +6,13 @@ from db import db
 def tweet_bot(args):
     # Get the message from DB
     (db_conn, message, record_id) = db.get_message(args)
+    t = time()
     rc = 0
+    
+    # No messages to be sent
+    if message is None:
+        print(f'{ctime(t)} - NO MESSAGES TO BE SENT')
+        return 1
 
     if args['hash_tag']:
         # Append hash-tag to padyam

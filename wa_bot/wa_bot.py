@@ -32,6 +32,21 @@ def wa_bot(args):
         wa_message = f'{args["caption"]}'
 
     if message['padyam']:
+        #
+        # bold the padyam
+        #
+        t_padyam = message["padyam"]
+        t_padyam_li = t_padyam.split('\n')
+
+        t_padyam_bold = ''
+        for i in t_padyam_li:
+            if i:
+                # ensure its not empty line
+                t_padyam_bold = f'{t_padyam_bold}\n*{i}*'
+
+        message["padyam"] = t_padyam_bold
+
+
         wa_message = f'{wa_message}' \
                      f'\n' \
                      f'{message["padyam"]}' \
@@ -39,6 +54,7 @@ def wa_bot(args):
 
     if message['meaning']:
         message['meaning'] = message["meaning"].replace("తాత్పర్యం:", "*తాత్పర్యం:*")
+        message['meaning'] = message["meaning"].replace("భావం: ", "*భావం:* ")
         wa_message = f'{wa_message}' \
                      f'\n' \
                      f'{message["meaning"]}' \
@@ -61,10 +77,10 @@ def wa_bot(args):
         driver = webdriver.Chrome(options=options)
         driver.maximize_window()
         driver.get('https://web.whatsapp.com')
-        sleep(10)
+        sleep(20)
 
         driver.find_element_by_xpath('//*[@title = "{}"]'.format(wa_contact)).click()
-        sleep(10)
+        sleep(15)
 
         wa_msg = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
 
