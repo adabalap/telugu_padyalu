@@ -22,7 +22,7 @@ def wa_bot(args):
     # No messages to be sent
     if message is None:
         print(f'{ctime(t)} - NO MESSAGES TO BE SENT')
-        return 1
+        return rc
 
     wa_contact = f'{args["wa_contact"]}'
     print(f'Sending message to contact: {wa_contact}')
