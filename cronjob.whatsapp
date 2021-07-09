@@ -55,7 +55,7 @@ RETRY_COUNT=0
 
 while [ "$RETRY" == "True" ]
 do
-	# perfrom the main logic
+	# perform the main logic
 	main
 	rc=$?	
 
