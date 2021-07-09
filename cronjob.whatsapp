@@ -55,47 +55,45 @@ RETRY_COUNT=0
 
 while [ "$RETRY" == "True" ]
 do
+	# perfrom the main logic
 	main
 	rc=$?	
 
-	if [[ $rc -eq 0 && $RETRY_COUNT -eq 0 ]]; then
-		echo "`date`: Delivered message on first attempt"
+	if [[ $rc -eq 0 && $RETRY_COUNT -ge 0 ]]; then
+		echo "`date`: Delivered message on attempt# ${RETRY_COUNT}"
 		RETRY="False"
 		break
- 	elif [[ $rc -ne 0 && $RETRY_COUNT -eq 0 ]]; then	
+ 	elif [[ $rc -ne 0 ]]; then	
 		# initilize the retry start time
-		RETRY_START_TIME=`date`	
-	fi
+		if [[ ${RETRY_COUNT} -eq 0 ]]; then
+			RETRY_START_TIME=`date`	
+			RETRY_COUNT=$(($RETRY_COUNT + 1))
+		fi
 	
-	#
-	# adding rate limit logic for retry
-	#
-	# Sleep for 5 minutes before retry
-	# 1. retry every 5 minutes in the 1st hour
-	# 2. retry evey 1 hour thereafer for next 3 hours
-	#
-	echo
-	echo "`date`: Sleeping for ${SLEEP_TIME} before retrying"
-	echo "`date`: Current retry count is ${RETRY_COUNT}"
-	echo
+		# retry logic similar to 'rate limit'
+		#   1. retry every 5 minutes for next one hour
+		#   2. retry evey 1 hour thereafer for next 3 hours
+		echo
+		echo "`date`: Retry# ${RETRY_COUNT} | Sleeping for ${SLEEP_TIME}"
+		echo
 
-	sleep ${SLEEP_TIME}
-	RETRY_COUNT=$(($RETRY_COUNT + 1))
+		sleep ${SLEEP_TIME}
+		RETRY_COUNT=$(($RETRY_COUNT + 1))
 
 
-	if [[ ${RETRY_COUNT} -eq 11 ]]; then
-		# sleep for 1 hour before retrying
-		SLEEP_TIME=$((60 * 60))
-	fi
+		if [[ ${RETRY_COUNT} -eq 12 ]]; then
+			# now sleep for 1 hour before retry
+			SLEEP_TIME=$((60 * 60))
+		fi
 	
-	if [[ ${RETRY_COUNT} -ge 15 ]]; then
-		# retried from 4AM to 8AM 
-		RETRY_END_TIME=`date`	
+		if [[ ${RETRY_COUNT} -ge 16 ]]; then
+			# retry attempts made from 4AM to 8AM 
+			RETRY_END_TIME=`date`	
 
-		echo "`date`: Performed retry from ${RETRY_START_TIME} to ${RETRY_END_TIME}"
-
-		RETRY="False"
-		break
+			echo "`date`: Performed retry from ${RETRY_START_TIME} to ${RETRY_END_TIME}"
+			RETRY="False"
+			break
+		fi
 	fi
 done
 
