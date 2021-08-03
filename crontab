@@ -1,0 +1,19 @@
+# crontab -e
+SHELL=/bin/bash
+MAILTO=adabala.phani@gmail.com
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+
+# WhatsApp/Twitter messages
+BASE_DIR=/home/adabalap/Source/telugu_padyalu/
+0 4 * * * ${BASE_DIR}/cronjob_whatsapp.sh >> ${BASE_DIR}/whatsapp.log 2>&1
+0 3,15 * * * ${BASE_DIR}/cronjob_twitter.sh >> ${BASE_DIR}/twitter.log 2>&1
+

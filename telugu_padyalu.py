@@ -1,7 +1,6 @@
 import argparse
-
-from wa_bot import wa_bot
 from tweet_bot import tweet_bot
+from wa_bot import wa_bot
 
 
 def get_cmd_line_args():
